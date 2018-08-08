@@ -48,7 +48,7 @@ func (s *Service) UplevelProcess(userID int) User {
 	filteredTransactions := FilterTransactionBySpending(transactions)
 	countTransactions := len(filteredTransactions)
 	if checkCountOrder(countTransactions) &&
-		checkUserInRankByID(userID) {
+		user.CheckUserInRankByID(userID) {
 		currentLevel := user.UpdateLevel(userID)
 		freePoint := GetFreePoints(currentLevel)
 		user.UpdatePoints(userID, currentLevel, freePoint)
@@ -58,8 +58,4 @@ func (s *Service) UplevelProcess(userID int) User {
 
 func checkCountOrder(count int) bool {
 	return count >= priceCondition
-}
-
-func checkUserInRankByID(userID int) bool {
-	return true
 }

@@ -138,3 +138,13 @@ func Test_FilterTransactionBySpending_Input_8_Transactions_Should_Be_8_filtered_
 		t.Errorf("Expected %v but it go %v", expectedTransactionsCount, len(filteredTransactions))
 	}
 }
+func Test_CheckUserInRankByID_Input_006_Should_Be_True(t *testing.T) {
+	expected := true
+	userID := 006
+	user := User{ID: 006, Level: "Platinum", Points: 500}
+	actualResult := user.CheckUserInRankByID(userID)
+
+	if expected != actualResult {
+		t.Errorf("Expected %v but it go %v", expected, actualResult)
+	}
+}
