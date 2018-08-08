@@ -1,56 +1,65 @@
 package memberlevel
 
 const orderCondition = 1000
+const priceCondition = 8
 
-type User struct {
-	ID     int
-	Name   string
-	Level  string
-	Points int
+type Transaction struct {
+	Amount int
+	UserID int
 }
 
-type FreePoints struct {
-	Level  string
-	Points int
+type Service struct {
+	Users        []User
+	Transactions []Transaction
+}
+
+func (s Service) GetUserByID(userID int) User {
+	for _, user := range s.Users {
+		if user.ID == userID {
+			return user
+		}
+	}
+	return User{}
+}
+func (s Service) GetLastSixMonthByUserID(userID int) []Transaction {
+	return s.Transactions
 }
 
 func CheckSpending(spending int) bool {
-	if spending > orderCondition {
+	if spending >= orderCondition {
 		return true
 	}
 	return false
 }
 
-func (point *FreePoints) GetFreePoints(userLevel string) int {
-	if userLevel == "Gold" {
-		return 200
+func FilterTransactionBySpending(transactions []Transaction) []Transaction {
+	filtered := []Transaction{}
+	for _, transaction := range transactions {
+		if CheckSpending(transaction.Amount) {
+			filtered = append(filtered, transaction)
+		}
 	}
-	return point.Points
+	return filtered
 }
 
-func (user *User) UpdateLevel(userID int) string {
-	if userID == user.ID && user.Level == "Gold" {
-		user.Level = "Platinum"
-	}
-	return user.Level
-}
-
-func (user *User) UpdatePoints(userID int, userLevel string, points int) int {
-	if userID == user.ID && userLevel == user.Level {
-		user.Points += points
-	}
-	return user.Points
-}
-
-func UplevelProcess(userID int) User {
-	user := GetUserByID(userID)
-	transactions := GetLastSixMonthByUserID(userID)
+func (s *Service) UplevelProcess(userID int) User {
+	user := s.GetUserByID(userID)
+	transactions := s.GetLastSixMonthByUserID(userID)
 	filteredTransactions := FilterTransactionBySpending(transactions)
 	countTransactions := len(filteredTransactions)
-	if checkCountOrder(countTransaction) &&
+	if checkCountOrder(countTransactions) &&
 		checkUserInRankByID(userID) {
 		currentLevel := user.UpdateLevel(userID)
-		user.UpdatePoints(userID, currentLevel)
+		freePoint := GetFreePoints(currentLevel)
+		user.UpdatePoints(userID, currentLevel, freePoint)
 	}
 	return user
+}
+
+func checkCountOrder(count int) bool {
+	return count >= priceCondition
+}
+
+func checkUserInRankByID(userID int) bool {
+	return true
 }
