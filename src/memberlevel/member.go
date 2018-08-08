@@ -41,3 +41,16 @@ func (user *User) UpdatePoints(userID int, userLevel string, points int) int {
 	}
 	return user.Points
 }
+
+func UplevelProcess(userID int) User {
+	user := GetUserByID(userID)
+	transactions := GetLastSixMonthByUserID(userID)
+	filteredTransactions := FilterTransactionBySpending(transactions)
+	countTransactions := len(filteredTransactions)
+	if checkCountOrder(countTransaction) &&
+		checkUserInRankByID(userID) {
+		currentLevel := user.UpdateLevel(userID)
+		user.UpdatePoints(userID, currentLevel)
+	}
+	return user
+}

@@ -9,7 +9,7 @@ func Test_CheckSpending_Input_1200_Should_Be_True(t *testing.T) {
 	actualResult := CheckSpending(spending)
 
 	if expected != actualResult {
-		t.Errorf("Expected %v but got it %v", expected, actualResult)
+		t.Errorf("Expected %v but it got %v", expected, actualResult)
 	}
 }
 
@@ -20,7 +20,7 @@ func Test_CheckSpending_Input_800_Should_Be_False(t *testing.T) {
 	actualResult := CheckSpending(spending)
 
 	if expected != actualResult {
-		t.Errorf("Expected %v but got it %v", expected, actualResult)
+		t.Errorf("Expected %v but it got %v", expected, actualResult)
 	}
 }
 
@@ -32,7 +32,7 @@ func Test_GetFreePoints_Input_Platinum_Should_Be_300(t *testing.T) {
 	actualResult := point.GetFreePoints(userLevel)
 
 	if expected != actualResult {
-		t.Errorf("Expected %d but got it %d", expected, actualResult)
+		t.Errorf("Expected %d but it got %d", expected, actualResult)
 	}
 }
 
@@ -44,7 +44,7 @@ func Test_UpdateLevel_Input_006_Should_Be_Platinum(t *testing.T) {
 	actualResult := user.UpdateLevel(userID)
 
 	if expected != actualResult {
-		t.Errorf("Expected %s but got it %s", expected, actualResult)
+		t.Errorf("Expected %s but it got %s", expected, actualResult)
 	}
 }
 
@@ -58,6 +58,17 @@ func Test_UpdatePoints_Input_006_Platinum_Should_Be_800(t *testing.T) {
 	actualResult := user.UpdatePoints(userID, userLevel, freePoint.Points)
 
 	if expected != actualResult {
-		t.Errorf("Expected %d but got it %d", expected, actualResult)
+		t.Errorf("Expected %d but it got %d", expected, actualResult)
+	}
+}
+
+func Test_UplevelProcess_Input_006_Should_Be_User_with_Platinum(t *testing.T) {
+	expectedUser := User{ID: 006, Level: "Platinum"}
+	userID := 006
+
+	actualResult := UplevelProcess(userID)
+
+	if expectedUser != actualResult {
+		t.Errorf("Expected %v but it go %v", expectedUser, actualResult)
 	}
 }
