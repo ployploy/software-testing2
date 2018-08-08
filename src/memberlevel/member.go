@@ -42,6 +42,13 @@ func (user *User) UpdatePoints(userID int, userLevel string, points int) int {
 	return user.Points
 }
 
+func (user User) CheckUserInRankByID(userID int) bool {
+	if userID == user.ID {
+		return true
+	}
+	return false
+}
+
 func UplevelProcess(userID int) User {
 	user := GetUserByID(userID)
 	transactions := GetLastSixMonthByUserID(userID)

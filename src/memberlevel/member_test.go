@@ -72,3 +72,14 @@ func Test_UplevelProcess_Input_006_Should_Be_User_with_Platinum(t *testing.T) {
 		t.Errorf("Expected %v but it go %v", expectedUser, actualResult)
 	}
 }
+
+func Test_CheckUserInRankByID_Input_006_Should_Be_True(t *testing.T) {
+	expected := true
+	userID := 006
+	user := User{ID: 006, Level: "Platinum", Points: 500}
+	actualResult := user.CheckUserInRankByID(userID)
+
+	if expected != actualResult {
+		t.Errorf("Expected %v but it go %v", expected, actualResult)
+	}
+}
